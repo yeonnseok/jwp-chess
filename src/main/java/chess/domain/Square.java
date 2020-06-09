@@ -4,8 +4,8 @@ import java.util.Objects;
 
 public class Square {
     private final Position position;
-    private final Piece piece;
-    private final Team team;
+    private Piece piece;
+    private Team team;
 
     private Square(final Position position, final Piece piece, final Team team) {
         this.position = position;
@@ -15,6 +15,36 @@ public class Square {
 
     public static Square of(final Position position, final Piece piece, final Team team) {
         return new Square(position, piece, team);
+    }
+
+    public boolean movable(final Board board, final Position to) {
+        return piece.findPossiblePaths(board, position).contains(to);
+    }
+
+    public void update(final Piece piece, final Team team) {
+        this.piece = piece;
+        this.team = team;
+    }
+
+    public boolean isWhite() {
+        return team == Team.WHITE;
+    }
+
+    public boolean isSameTeam(Square targetSquare) {
+        return team == targetSquare.getTeam();
+    }
+
+    public boolean isBlank() {
+        return piece == Piece.NONE && team == Team.NONE;
+    }
+
+    public boolean isOtherTeam(final Square square) {
+        return team != square.team && (team != Team.NONE && square.team != Team.NONE);
+    }
+
+    public boolean isFirstTurn() {
+        return (team == Team.WHITE && position.getRank() == 2) |
+                (team == Team.BLACK && position.getRank() == 7);
     }
 
     public Position getPosition() {

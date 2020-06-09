@@ -136,4 +136,80 @@ class BoardTest {
         );
     }
 
+    @DisplayName("체스말 이동 불가능 시 예외발생")
+    @Test
+    void moveError() {
+        assertThatThrownBy(() -> {
+            final Board board = BoardFactory.create();
+            final Position from = Position.from("a1");
+            final Position to = Position.from("a2");
+
+            board.move(from, to);
+        }).isInstanceOf(InvalidMoveException.class);
+    }
+
+    @DisplayName("초기 상태에서 체스말 이동")
+    @ParameterizedTest
+    @MethodSource("provideMoveInformation")
+    void move(String fromValue, String toValue, Piece expectedToPiece, Team expectedToTeam) {
+        final Board board = BoardFactory.create();
+        final Position from = Position.from(fromValue);
+        final Position to = Position.from(toValue);
+
+        board.move(from, to);
+
+        assertThat(board.findSquareBy(from).getPiece()).isEqualTo(Piece.NONE);
+        assertThat(board.findSquareBy(from).getTeam()).isEqualTo(Team.NONE);
+        assertThat(board.findSquareBy(to).getPiece()).isEqualTo(expectedToPiece);
+        assertThat(board.findSquareBy(to).getTeam()).isEqualTo(expectedToTeam);
+    }
+
+    private static Stream<Arguments> provideMoveInformation() {
+        return Stream.of(
+                Arguments.of("a2", "a3", Piece.PAWN, Team.WHITE),
+                Arguments.of("a2", "a4", Piece.PAWN, Team.WHITE),
+                Arguments.of("b2", "b3", Piece.PAWN, Team.WHITE),
+                Arguments.of("b2", "b4", Piece.PAWN, Team.WHITE),
+                Arguments.of("c2", "c3", Piece.PAWN, Team.WHITE),
+                Arguments.of("c2", "c4", Piece.PAWN, Team.WHITE),
+                Arguments.of("d2", "d3", Piece.PAWN, Team.WHITE),
+                Arguments.of("d2", "d4", Piece.PAWN, Team.WHITE),
+                Arguments.of("e2", "e3", Piece.PAWN, Team.WHITE),
+                Arguments.of("e2", "e4", Piece.PAWN, Team.WHITE),
+                Arguments.of("f2", "f3", Piece.PAWN, Team.WHITE),
+                Arguments.of("f2", "f4", Piece.PAWN, Team.WHITE),
+                Arguments.of("g2", "g3", Piece.PAWN, Team.WHITE),
+                Arguments.of("g2", "g4", Piece.PAWN, Team.WHITE),
+                Arguments.of("h2", "h3", Piece.PAWN, Team.WHITE),
+                Arguments.of("h2", "h4", Piece.PAWN, Team.WHITE),
+
+                Arguments.of("b1", "a3", Piece.KNIGHT, Team.WHITE),
+                Arguments.of("b1", "c3", Piece.KNIGHT, Team.WHITE),
+                Arguments.of("g1", "f3", Piece.KNIGHT, Team.WHITE),
+                Arguments.of("g1", "h3", Piece.KNIGHT, Team.WHITE),
+
+                Arguments.of("a7", "a6", Piece.PAWN, Team.BLACK),
+                Arguments.of("a7", "a5", Piece.PAWN, Team.BLACK),
+                Arguments.of("b7", "b6", Piece.PAWN, Team.BLACK),
+                Arguments.of("b7", "b5", Piece.PAWN, Team.BLACK),
+                Arguments.of("c7", "c6", Piece.PAWN, Team.BLACK),
+                Arguments.of("c7", "c5", Piece.PAWN, Team.BLACK),
+                Arguments.of("d7", "d6", Piece.PAWN, Team.BLACK),
+                Arguments.of("d7", "d5", Piece.PAWN, Team.BLACK),
+                Arguments.of("e7", "e6", Piece.PAWN, Team.BLACK),
+                Arguments.of("e7", "e5", Piece.PAWN, Team.BLACK),
+                Arguments.of("f7", "f6", Piece.PAWN, Team.BLACK),
+                Arguments.of("f7", "f5", Piece.PAWN, Team.BLACK),
+                Arguments.of("g7", "g6", Piece.PAWN, Team.BLACK),
+                Arguments.of("g7", "g5", Piece.PAWN, Team.BLACK),
+                Arguments.of("h7", "h6", Piece.PAWN, Team.BLACK),
+                Arguments.of("h7", "h5", Piece.PAWN, Team.BLACK),
+
+                Arguments.of("b8", "a6", Piece.KNIGHT, Team.BLACK),
+                Arguments.of("b8", "c6", Piece.KNIGHT, Team.BLACK),
+                Arguments.of("g8", "f6", Piece.KNIGHT, Team.BLACK),
+                Arguments.of("g8", "h6", Piece.KNIGHT, Team.BLACK)
+        );
+    }
+
 }

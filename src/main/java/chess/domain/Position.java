@@ -1,7 +1,10 @@
 package chess.domain;
 
+import chess.domain.direction.Direction;
+
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.IntStream;
 
 public class Position {
@@ -34,12 +37,43 @@ public class Position {
         throw new InvalidPositionException();
     }
 
+    public static Position of(final int file, final int rank) {
+        return new Position((char)(file + ASCII_GAP), rank);
+    }
+
     public char getFile() {
         return file;
     }
 
     public int getRank() {
         return rank;
+    }
+
+    public Position updateWith(final Direction direction) {
+        return Position.from((char)(file + direction.getToFile())
+                + String.valueOf(rank + direction.getToRank()));
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final Position position = (Position) o;
+        return file == position.file &&
+                rank == position.rank;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(file, rank);
+    }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "file=" + file +
+                ", rank=" + rank +
+                '}';
     }
 }
 
