@@ -17,6 +17,7 @@ class MultiMoveStrategyTest {
     void setUp() {
         board = BoardFactory.createEmpty();
         board.updateSquareBy(Position.from("f4"), Piece.QUEEN, Team.WHITE);
+        board.updateSquareBy(Position.from("g4"), Piece.KNIGHT, Team.BLACK);
         board.updateSquareBy(Position.from("f6"), Piece.PAWN, Team.WHITE);
         board.updateSquareBy(Position.from("e4"), Piece.KING, Team.WHITE);
         board.updateSquareBy(Position.from("c2"), Piece.ROOK, Team.WHITE);
@@ -38,7 +39,7 @@ class MultiMoveStrategyTest {
 
     @DisplayName("퀸 이동")
     @ParameterizedTest
-    @ValueSource(strings = {"f5", "g5", "h6", "g4", "h4", "g3", "h2", "e3"})
+    @ValueSource(strings = {"f5", "h6", "g4", "g5", "g3", "h2", "e3"})
     void moveQueen(String toValue) {
         Position from = Position.from("f4");
         Position to = Position.from(toValue);
