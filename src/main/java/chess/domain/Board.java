@@ -25,14 +25,25 @@ public class Board {
                 .orElseThrow(NoSuchSquareException::new);
     }
 
-    public void move(final Position from, final Position to) {
+    public State move(final Position from, final Position to) {
         Square fromSquare = findSquareBy(from);
         if (fromSquare.movable(this, to)) {
+            Piece toPiece = findSquareBy(to).getPiece();
+            Team movedTurn = fromSquare.getTeam();
+
             updateSquareBy(to, fromSquare.getPiece(), fromSquare.getTeam());
             updateSquareBy(from, Piece.NONE, Team.NONE);
-            return;
+
+            return getNextState(toPiece, movedTurn);
         }
         throw new InvalidMoveException();
+    }
+
+    private State getNextState(final Piece toPiece, final Team movedTurn) {
+        if (toPiece.isKing()){
+            return new Finished(movedTurn);
+        }
+        return new Playing(movedTurn);
     }
 
     public void updateSquareBy(final Position position, final Piece piece, final Team team) {

@@ -22,6 +22,10 @@ public enum Piece {
         this.moveStrategy = moveStrategy;
     }
 
+    public boolean isKing() {
+        return this == KING;
+    }
+
     public double getScore() {
         return score;
     }
@@ -31,7 +35,6 @@ public enum Piece {
     }
 
     public List<Position> findPossiblePaths(final Board board, final Position position) {
-        System.out.println(moveStrategy.findPossiblePaths(board, position));
         return moveStrategy.findPossiblePaths(board, position);
     }
 }

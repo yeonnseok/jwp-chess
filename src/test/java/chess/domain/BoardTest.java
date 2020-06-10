@@ -156,8 +156,11 @@ class BoardTest {
         final Position from = Position.from(fromValue);
         final Position to = Position.from(toValue);
 
-        board.move(from, to);
+        State state = board.move(from, to);
 
+        assertThat(state.getClass()).isEqualTo(Playing.class);
+        assertThat(state.getMovedTurn()).isEqualTo(expectedToTeam);
+        assertThat(state.getNextTurn()).isEqualTo(expectedToTeam.getOpposingTeam());
         assertThat(board.findSquareBy(from).getPiece()).isEqualTo(Piece.NONE);
         assertThat(board.findSquareBy(from).getTeam()).isEqualTo(Team.NONE);
         assertThat(board.findSquareBy(to).getPiece()).isEqualTo(expectedToPiece);
@@ -296,5 +299,17 @@ class BoardTest {
         double score = board.calculateTotalScore(Team.BLACK);
 
         assertThat(score).isEqualTo(21);
+    }
+
+    @DisplayName("게임 종료 - 왕이 잡혔는지 확인")
+    @Test
+    void finishGame() {
+        Board board = BoardFactory.createEmpty();
+        board.updateSquareBy(Position.from("a4"), Piece.KING, Team.BLACK);
+        board.updateSquareBy(Position.from("b3"), Piece.PAWN, Team.WHITE);
+
+        State state = board.move(Position.from("b3"), Position.from("a4"));
+        assertThat(state.getClass()).isEqualTo(Finished.class);
+        assertThat(state.getMovedTurn()).isEqualTo(Team.WHITE);
     }
 }
