@@ -2,6 +2,9 @@ package chess.domain;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.IntStream;
+
+import static chess.domain.Position.*;
 
 public class Board {
     private static final int BOARD_SIZE = 64;
@@ -38,6 +41,22 @@ public class Board {
                 square.update(piece, team);
             }
         });
+    }
+
+    public double calculateTotalScore(final Team team) {
+        final int multiPawnCount = IntStream.rangeClosed(MIN_RANK_SIZE, MAX_RANK_SIZE)
+                .map(i -> (int) squares.stream()
+                        .filter(square -> square.isMultiPawn(team, (char) (i + ASCII_GAP)))
+                        .count()
+                )
+                .map(count -> count > 1 ? count : 0)
+                .sum();
+
+        return squares.stream()
+                .filter(square -> square.isTeam(team))
+                .mapToDouble(Square::getScore)
+                .sum()
+                - (Piece.PAWN.getHalfScore() * multiPawnCount);
     }
 
     public List<Square> getSquares() {

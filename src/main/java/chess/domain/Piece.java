@@ -26,6 +26,10 @@ public enum Piece {
         return score;
     }
 
+    public double getHalfScore() {
+        return score / 2;
+    }
+
     public List<Position> findPossiblePaths(final Board board, final Position position) {
         System.out.println(moveStrategy.findPossiblePaths(board, position));
         return moveStrategy.findPossiblePaths(board, position);

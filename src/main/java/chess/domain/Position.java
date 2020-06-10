@@ -8,9 +8,9 @@ import java.util.Objects;
 import java.util.stream.IntStream;
 
 public class Position {
-    private static final int MIN_RANK_SIZE = 1;
-    private static final int MAX_RANK_SIZE = 8;
-    public static final int ASCII_GAP = 96;
+    static final int MIN_RANK_SIZE = 1;
+    static final int MAX_RANK_SIZE = 8;
+    static final int ASCII_GAP = 96;
 
     private static final Map<String, Position> BOARD_POSITIONS = new HashMap<>();
 

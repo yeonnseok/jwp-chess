@@ -212,4 +212,89 @@ class BoardTest {
         );
     }
 
+    @DisplayName("화이트 팀 점수 계산 - 초기 상태")
+    @Test
+    void initWhiteScore() {
+        Board board = BoardFactory.create();
+
+        double score = board.calculateTotalScore(Team.WHITE);
+
+        assertThat(score).isEqualTo(38);
+    }
+
+    @DisplayName("블랙 팀 점수 계산 - 초기 상태")
+    @Test
+    void initBlackScore() {
+        Board board = BoardFactory.create();
+
+        double score = board.calculateTotalScore(Team.BLACK);
+
+        assertThat(score).isEqualTo(38);
+    }
+
+    @DisplayName("화이트 팀 점수 계산 - pawn 중복 없을 때")
+    @Test
+    void whiteScore() {
+        Board board = BoardFactory.createEmpty();
+        board.updateSquareBy(Position.from("a5"), Piece.ROOK, Team.WHITE);
+        board.updateSquareBy(Position.from("b2"), Piece.BISHOP, Team.WHITE);
+        board.updateSquareBy(Position.from("f5"), Piece.QUEEN, Team.WHITE);
+        board.updateSquareBy(Position.from("h6"), Piece.KING, Team.WHITE);
+        board.updateSquareBy(Position.from("c1"), Piece.PAWN, Team.WHITE);
+
+        double score = board.calculateTotalScore(Team.WHITE);
+
+        assertThat(score).isEqualTo(18);
+    }
+
+    @DisplayName("블랙 팀 점수 계산 - pawn 중복 없을 때")
+    @Test
+    void blackScore() {
+        Board board = BoardFactory.createEmpty();
+        board.updateSquareBy(Position.from("a4"), Piece.ROOK, Team.BLACK);
+        board.updateSquareBy(Position.from("a5"), Piece.KNIGHT, Team.BLACK);
+        board.updateSquareBy(Position.from("b2"), Piece.BISHOP, Team.BLACK);
+        board.updateSquareBy(Position.from("f5"), Piece.QUEEN, Team.BLACK);
+        board.updateSquareBy(Position.from("h6"), Piece.KING, Team.BLACK);
+        board.updateSquareBy(Position.from("c1"), Piece.PAWN, Team.BLACK);
+
+        double score = board.calculateTotalScore(Team.BLACK);
+
+        assertThat(score).isEqualTo(20.5);
+    }
+
+    @DisplayName("화이트 팀 점수 계산 - pawn 중복 있을 때")
+    @Test
+    void whiteScoreWithMultiplePawnInSameFile() {
+        Board board = BoardFactory.createEmpty();
+        board.updateSquareBy(Position.from("a5"), Piece.ROOK, Team.WHITE);
+        board.updateSquareBy(Position.from("b2"), Piece.BISHOP, Team.WHITE);
+        board.updateSquareBy(Position.from("f5"), Piece.QUEEN, Team.WHITE);
+        board.updateSquareBy(Position.from("h6"), Piece.KING, Team.WHITE);
+        board.updateSquareBy(Position.from("c1"), Piece.PAWN, Team.WHITE);
+        board.updateSquareBy(Position.from("c3"), Piece.PAWN, Team.WHITE);
+        board.updateSquareBy(Position.from("c5"), Piece.PAWN, Team.WHITE);
+
+        double score = board.calculateTotalScore(Team.WHITE);
+
+        assertThat(score).isEqualTo(18.5);
+    }
+
+    @DisplayName("블랙 팀 점수 계산 - pawn 중복 있을 때")
+    @Test
+    void blackScoreWithMultiplePawnInSameFile() {
+        Board board = BoardFactory.createEmpty();
+        board.updateSquareBy(Position.from("a4"), Piece.ROOK, Team.BLACK);
+        board.updateSquareBy(Position.from("a5"), Piece.KNIGHT, Team.BLACK);
+        board.updateSquareBy(Position.from("b2"), Piece.BISHOP, Team.BLACK);
+        board.updateSquareBy(Position.from("f5"), Piece.QUEEN, Team.BLACK);
+        board.updateSquareBy(Position.from("h6"), Piece.KING, Team.BLACK);
+        board.updateSquareBy(Position.from("c1"), Piece.PAWN, Team.BLACK);
+        board.updateSquareBy(Position.from("c2"), Piece.PAWN, Team.BLACK);
+        board.updateSquareBy(Position.from("c3"), Piece.PAWN, Team.BLACK);
+
+        double score = board.calculateTotalScore(Team.BLACK);
+
+        assertThat(score).isEqualTo(21);
+    }
 }

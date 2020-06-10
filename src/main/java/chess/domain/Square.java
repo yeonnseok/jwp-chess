@@ -38,6 +38,10 @@ public class Square {
         return piece == Piece.NONE && team == Team.NONE;
     }
 
+    public boolean isTeam(final Team team) {
+        return this.team == team;
+    }
+
     public boolean isOtherTeam(final Square square) {
         return team != square.team && (team != Team.NONE && square.team != Team.NONE);
     }
@@ -45,6 +49,16 @@ public class Square {
     public boolean isFirstTurn() {
         return (team == Team.WHITE && position.getRank() == 2) |
                 (team == Team.BLACK && position.getRank() == 7);
+    }
+
+    public boolean isMultiPawn(Team team, char file) {
+        return this.team == team
+                && piece == Piece.PAWN
+                && Objects.equals(position.getFile(), file);
+    }
+
+    public double getScore() {
+        return piece.getScore();
     }
 
     public Position getPosition() {
