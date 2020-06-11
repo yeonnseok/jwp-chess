@@ -4,10 +4,10 @@ import { EVENT_TYPE } from "/js/utils/constants.js";
 function Index() {
 
     const $boardList = document.querySelector('#board-list')
-    const $newGameBtn = document.querySelector('#create-btn')
-    const $deleteGameBtn = document.querySelector('#delete-btn')
+    const $createBtn = document.querySelector('#create-btn')
 
     const onCreateBoard = async event => {
+        event.preventDefault();
         try {
             await fetch("/boards", {
                 method : 'POST',
@@ -18,12 +18,27 @@ function Index() {
         } catch (e) {
             alert("오류!")
         }
-        window.location.reload();
+        initBoardList()
     }
 
-    const onDeleteBoard = event => {
+    const onDeleteBoard = async event => {
         event.preventDefault();
-        // TODO: 삭제 버튼을 누르면 보드가 삭제된다.
+        const $target = event.target
+        if ($target.id !== 'delete-btn') {
+            return
+        }
+        try {
+            const id = event.target.closest('DIV').dataset.boardId
+            await fetch(`/boards/${id}`, {
+                method : 'DELETE',
+                headers : {
+                    'Content-Type' : 'application/json'
+                }
+            })
+        } catch (e) {
+            alert(e, "오류!")
+        }
+        initBoardList()
     }
 
     const initBoardList = async () => {
@@ -34,16 +49,16 @@ function Index() {
                     'Content-Type': 'application/json'
                 }
             }).then(data => data.json())
-                .then(boards => boards.map(board => listBoardTemplates(board)).join(""));
-            $boardList.innerHTML = template;
+                .then(boards => boards.map(board => listBoardTemplates(board)).join(""))
+            $boardList.innerHTML = template
         } catch (e) {
-            alert(e, '오류!');
+            alert(e, '오류!')
         }
     }
 
     const initEventListener = () => {
-        $newGameBtn.addEventListener(EVENT_TYPE.CLICK, onCreateBoard);
-        $deleteGameBtn.addEventListener(EVENT_TYPE.CLICK, onDeleteBoard);
+        $createBtn.addEventListener(EVENT_TYPE.CLICK, onCreateBoard);
+        $boardList.addEventListener(EVENT_TYPE.CLICK, onDeleteBoard);
     }
 
     this.init = () => {

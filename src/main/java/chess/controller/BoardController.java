@@ -3,10 +3,7 @@ package chess.controller;
 import chess.service.BoardService;
 import chess.service.board.dto.BoardResponse;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
@@ -31,6 +28,12 @@ public class BoardController {
     public ResponseEntity<List<BoardResponse>> getAll() {
         final List<BoardResponse> boardResponses = boardService.findAllBoards();
         return ResponseEntity.ok().body(boardResponses);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
+        boardService.deleteBoard(id);
+        return ResponseEntity.noContent().build();
     }
 
 }

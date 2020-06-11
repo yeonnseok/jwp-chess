@@ -33,4 +33,8 @@ public class BoardService {
                 .orElseThrow(NotExistedBoardException::new);
         return BoardResponse.from(board);
     }
+
+    public void deleteBoard(final Long id) {
+        boardRepository.deleteById(id);
+    }
 }
