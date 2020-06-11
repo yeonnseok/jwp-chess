@@ -30,6 +30,12 @@ public class BoardController {
         return ResponseEntity.ok().body(boardResponses);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<BoardResponse> get(@PathVariable("id") Long id) {
+        final BoardResponse boardResponse = boardService.findBoard(id);
+        return ResponseEntity.ok().body(boardResponse);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
         boardService.deleteBoard(id);

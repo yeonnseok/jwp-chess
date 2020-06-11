@@ -6,6 +6,11 @@ ul {
     padding: 0;
 }
 
+#index-title {
+    display: flex;
+    justify-content: center;
+}
+
 .board-list-section .inner {
     width: 85%;
     height: 60%;

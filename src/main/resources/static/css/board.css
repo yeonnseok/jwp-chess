@@ -8,10 +8,6 @@ img {
     width: 75px;
 }
 
-td {
-    padding: 0;
-}
-
 .m-center {
     margin: 0 auto;
 }
@@ -36,5 +32,22 @@ header .inner .title {
 
 .board {
     margin-top: 20px;
+}
+.board .squares .row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.board .square {
+    width: 74px;
+    height: 74px;
+}
+
+.white-square {
+    background-color: #ffdead;
+}
+
+.black-square {
+    background-color: #a0522d;
 }
 

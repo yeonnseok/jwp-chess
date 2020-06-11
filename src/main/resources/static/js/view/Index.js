@@ -1,4 +1,4 @@
-import { listBoardTemplates } from '/js/utils/templates.js'
+import { listBoardTemplate } from '/js/utils/templates.js'
 import { EVENT_TYPE } from "/js/utils/constants.js";
 
 function Index() {
@@ -41,6 +41,15 @@ function Index() {
         initBoardList()
     }
 
+    const onStartGame = event => {
+        const $target = event.target
+        if ($target.id !== 'start-btn') {
+            return
+        }
+        const id = $target.closest('DIV').dataset.boardId
+        window.location.href = '/start' + '#' + id;
+    }
+
     const initBoardList = async () => {
         try {
             const template = await fetch("/boards", {
@@ -49,7 +58,7 @@ function Index() {
                     'Content-Type': 'application/json'
                 }
             }).then(data => data.json())
-                .then(boards => boards.map(board => listBoardTemplates(board)).join(""))
+                .then(boards => boards.map(board => listBoardTemplate(board)).join(""))
             $boardList.innerHTML = template
         } catch (e) {
             alert(e, '오류!')
@@ -59,6 +68,8 @@ function Index() {
     const initEventListener = () => {
         $createBtn.addEventListener(EVENT_TYPE.CLICK, onCreateBoard);
         $boardList.addEventListener(EVENT_TYPE.CLICK, onDeleteBoard);
+        $boardList.addEventListener(EVENT_TYPE.CLICK, onStartGame);
+
     }
 
     this.init = () => {
