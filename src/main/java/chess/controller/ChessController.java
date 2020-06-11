@@ -5,6 +5,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class ChessController {
@@ -20,9 +21,9 @@ public class ChessController {
         return "index";
     }
 
-    @GetMapping(value = "/start", produces = MediaType.TEXT_HTML_VALUE)
-    public String start(Model model) {
-        model.addAttribute("squares", boardService.createBoard());
+    @GetMapping(value = "/start/{id}", produces = MediaType.TEXT_HTML_VALUE)
+    public String start(Model model, @PathVariable("id") Long id) {
+        model.addAttribute("boardId", boardService.findBoard(id));
         return "board";
     }
 }

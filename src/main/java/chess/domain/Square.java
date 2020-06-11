@@ -1,11 +1,28 @@
 package chess.domain;
 
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
+@Table(name = "SQUARE")
 public class Square {
-    private final Position position;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "SQUARE_ID")
+    private Long id;
+
+    @Embedded
+    private Position position;
+
+    @Enumerated(EnumType.STRING)
     private Piece piece;
+
+    @Enumerated(EnumType.STRING)
     private Team team;
+
+    protected Square() {
+    }
 
     private Square(final Position position, final Piece piece, final Team team) {
         this.position = position;
@@ -61,6 +78,10 @@ public class Square {
         return piece.getScore();
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public Position getPosition() {
         return position;
     }
@@ -71,6 +92,17 @@ public class Square {
 
     public Team getTeam() {
         return team;
+    }
+
+    public String getPositionValue() {
+        return position.getFile() + String.valueOf(position.getRank());
+    }
+
+    public String getPieceTeam() {
+        if (piece == Piece.NONE) {
+            return "BLANK";
+        }
+        return team.name() + "_" + piece.name();
     }
 
     @Override

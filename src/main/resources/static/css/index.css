@@ -1,0 +1,57 @@
+.m-center {
+    margin: 0 auto;
+}
+
+ul {
+    padding: 0;
+}
+
+.board-list-section .inner {
+    width: 85%;
+    height: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid 2px blueviolet;
+    border-radius: 12px;
+}
+
+.mini-control-btn {
+    width: 100px;
+    height: 40px;
+    margin: 6px;
+    border: solid violet 2px;
+    background-color: darkorange;
+    border-radius: 5px;
+}
+
+.board-list-section #board-list {
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.board-list-section .board-item {
+    width: 90%;
+    margin: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.control-btn {
+    width: 120px;
+    height: 45px;
+    background-color: skyblue;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+#create-btn {
+    margin-top : 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

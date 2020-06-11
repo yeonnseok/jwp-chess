@@ -1,15 +1,28 @@
 package chess.domain;
 
+import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
 import static chess.domain.Position.*;
 
+@Entity
+@Table(name = "BOARD")
 public class Board {
     private static final int BOARD_SIZE = 64;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="BOARD_ID")
+    private Long id;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "BOARD_ID")
     private List<Square> squares;
+
+    protected Board() {
+    }
 
     public Board(final List<Square> squares) {
         if (squares.size() != BOARD_SIZE) {
@@ -68,6 +81,10 @@ public class Board {
                 .mapToDouble(Square::getScore)
                 .sum()
                 - (Piece.PAWN.getHalfScore() * multiPawnCount);
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public List<Square> getSquares() {

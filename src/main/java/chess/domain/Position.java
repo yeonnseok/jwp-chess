@@ -2,18 +2,19 @@ package chess.domain;
 
 import chess.domain.direction.Direction;
 
+import javax.persistence.Embeddable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
+@Embeddable
 public class Position {
     static final int MIN_RANK_SIZE = 1;
     static final int MAX_RANK_SIZE = 8;
     static final int ASCII_GAP = 96;
 
     private static final Map<String, Position> BOARD_POSITIONS = new HashMap<>();
-
 
     static {
         IntStream.rangeClosed(MIN_RANK_SIZE, MAX_RANK_SIZE)
@@ -22,8 +23,11 @@ public class Position {
                                 new Position((char)(i + ASCII_GAP), j))));
     }
 
-    private final char file;
-    private final int rank;
+    private char file;
+    private int rank;
+
+    protected Position() {
+    }
 
     private Position(final char file, final int rank) {
         this.file = file;

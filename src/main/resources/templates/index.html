@@ -2,10 +2,19 @@
 <html>
     <head>
         <title>모두의 체스</title>
+        <link type="text/css" rel="stylesheet" href="/css/index.css">
+        <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
     </head>
     <body>
-    <h1>Hello World</h1>
+        <h1>인덱스 페이지</h1>
+        <section class="board-list-section">
+            <div class="inner m-center">
+                <ul id="board-list">
+                </ul>
+            </div>
+        </section>
+        <button class="control-btn m-center" id="create-btn">새 게임</button>
 
-    <a href="/start">게임 시작하기</a>
+        <script type="module" src="/js/view/Index.js"></script>
     </body>
 </html>
