@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ChessController {
 
+    public ChessController() {
+    }
+
     @GetMapping(value = "/", produces = MediaType.TEXT_HTML_VALUE)
     public String index() {
         return "index";
