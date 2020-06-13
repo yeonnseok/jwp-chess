@@ -51,6 +51,7 @@ class PawnMoveStrategyTest {
     void moveBlackPawn(String toValue) {
         Position from = Position.from("g4");
         Position to = Position.from(toValue);
+        board.updateTurn(Team.BLACK);
 
         board.move("g4", toValue);
 

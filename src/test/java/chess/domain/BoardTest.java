@@ -153,6 +153,9 @@ class BoardTest {
         final Board board = BoardFactory.create();
         final Position from = Position.from(fromValue);
         final Position to = Position.from(toValue);
+        if (expectedToTeam == Team.BLACK) {
+            board.updateTurn(Team.BLACK);
+        }
 
         State state = board.move(fromValue, toValue);
 

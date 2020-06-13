@@ -106,7 +106,7 @@ class BoardControllerTest {
         // when
         mvc.perform(put("/boards/" + boardId + "/move?" + "from=" + from + "&to=" + to))
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("\"finished\":false,\"turn\":\"BLACK\"")));
+                .andExpect(content().string(containsString("\"finished\":false,\"movedTurn\":\"WHITE\",\"nextTurn\":\"BLACK\"")));
         // then
         verify(boardService).movePiece(eq(1L), eq("b2"), eq("b3"));
     }

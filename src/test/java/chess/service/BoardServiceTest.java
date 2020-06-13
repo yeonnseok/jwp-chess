@@ -119,7 +119,7 @@ class BoardServiceTest {
         // when
         final StateResponse stateResponse = boardService.movePiece(63L, "b2", "b3");
         // then
-        assertThat(stateResponse.getTurn()).isEqualTo("BLACK");
+        assertThat(stateResponse.getNextTurn()).isEqualTo("BLACK");
         assertThat(stateResponse.isFinished()).isFalse();
     }
 
@@ -134,7 +134,7 @@ class BoardServiceTest {
         // when
         final StateResponse stateResponse = boardService.movePiece(63L, "b7", "b5");
         // then
-        assertThat(stateResponse.getTurn()).isEqualTo("WHITE");
+        assertThat(stateResponse.getNextTurn()).isEqualTo("WHITE");
         assertThat(stateResponse.isFinished()).isFalse();
         // when
     }

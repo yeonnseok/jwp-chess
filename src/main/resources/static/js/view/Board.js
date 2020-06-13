@@ -24,13 +24,22 @@ function Board() {
         }
         if (moveInfo.length === 2) {
             try {
-                await fetch(`/boards/${id}/move?from=${moveInfo[0]}&to=${moveInfo[1]}`, {
+                const state = await fetch(`/boards/${id}/move?from=${moveInfo[0]}&to=${moveInfo[1]}`, {
                     method : 'PUT',
                     headers : {
                         'Content-Type' : 'application/json'
                     }
-                }).catch(err => console.log(err))
-                getBoardSquares()
+                }).then(data => data.json())
+                    .catch(err => console.log(err))
+                if (state.finished) {
+                    confirm(state.movedTurn + "승!, 게임이 끝났습니다!")
+                    await fetch(`/boards/${id}/`, {
+                        method : 'DELETE'
+                    })
+                    window.location.href = '/'
+                } else {
+                    getBoardSquares()
+                }
             } catch (e) {
                 alert(e, "오류!")
             }

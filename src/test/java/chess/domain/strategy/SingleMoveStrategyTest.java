@@ -52,6 +52,8 @@ class SingleMoveStrategyTest {
     @ValueSource(strings = {"h8", "d7", "a6", "d4"})
     void invalidMoveKing(String toValue) {
         assertThatThrownBy(() -> {
+            board.updateTurn(Team.BLACK);
+
             board.move("c3", toValue);
         }).isInstanceOf(InvalidMoveException.class);
     }
@@ -62,6 +64,7 @@ class SingleMoveStrategyTest {
     void moveKing(String toValue) {
         Position from = Position.from("c3");
         Position to = Position.from(toValue);
+        board.updateTurn(Team.BLACK);
 
         board.move("c3", toValue);
 
