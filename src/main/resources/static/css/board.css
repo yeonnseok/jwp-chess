@@ -73,6 +73,8 @@ header .inner .title {
 
 .information .score {
     visibility: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 /* BOARD */

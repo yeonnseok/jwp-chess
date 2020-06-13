@@ -5,6 +5,7 @@ import chess.domain.BoardFactory;
 import chess.domain.BoardRepository;
 import chess.domain.Team;
 import chess.service.board.dto.BoardResponse;
+import chess.service.board.dto.ScoreResponse;
 import chess.service.board.dto.StateResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -136,5 +137,21 @@ class BoardServiceTest {
         assertThat(stateResponse.getTurn()).isEqualTo("WHITE");
         assertThat(stateResponse.isFinished()).isFalse();
         // when
+    }
+
+    @DisplayName("점수계산")
+    @Test
+    void calculateScore() {
+        // given
+        final Board board = BoardFactory.create();
+        board.setId(63L);
+        given(boardRepository.findById(any())).willReturn(Optional.of(board));
+        // when
+        final ScoreResponse scoreResponse = boardService.calculateScore(board.getId());
+        // then
+        verify(boardRepository).findById(eq(63L));
+        assertThat(scoreResponse).isNotNull();
+        assertThat(scoreResponse.getBlackScore()).isEqualTo(38);
+        assertThat(scoreResponse.getWhiteScore()).isEqualTo(38);
     }
 }

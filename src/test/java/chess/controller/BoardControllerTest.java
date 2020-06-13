@@ -1,8 +1,12 @@
 package chess.controller;
 
-import chess.domain.*;
+import chess.domain.Board;
+import chess.domain.BoardFactory;
+import chess.domain.Playing;
+import chess.domain.Team;
 import chess.service.BoardService;
 import chess.service.board.dto.BoardResponse;
+import chess.service.board.dto.ScoreResponse;
 import chess.service.board.dto.StateResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -105,5 +109,20 @@ class BoardControllerTest {
                 .andExpect(content().string(containsString("\"finished\":false,\"turn\":\"BLACK\"")));
         // then
         verify(boardService).movePiece(eq(1L), eq("b2"), eq("b3"));
+    }
+
+    @DisplayName("점수 현황 불러오기")
+    @Test
+    void score() throws Exception {
+        // given
+        final Long boardId = 1L;
+        final ScoreResponse score = new ScoreResponse(38, 38);
+        given(boardService.calculateScore(any())).willReturn(score);
+        // when
+        mvc.perform(get("/boards/" + boardId + "/score"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("\"whiteScore\":38.0,\"blackScore\":38.0")));
+        // then
+        verify(boardService).calculateScore(eq(1L));
     }
 }

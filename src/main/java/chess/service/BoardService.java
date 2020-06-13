@@ -1,10 +1,8 @@
 package chess.service;
 
-import chess.domain.Board;
-import chess.domain.BoardFactory;
-import chess.domain.BoardRepository;
-import chess.domain.State;
+import chess.domain.*;
 import chess.service.board.dto.BoardResponse;
+import chess.service.board.dto.ScoreResponse;
 import chess.service.board.dto.StateResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,5 +46,13 @@ public class BoardService {
         State state = board.move(from, to);
         board.updateTurn(state.getNextTurn());
         return StateResponse.from(state);
+    }
+
+    public ScoreResponse calculateScore(final Long id) {
+        final Board board = boardRepository.findById(id)
+                .orElseThrow(NotExistedBoardException::new);
+        final double whiteScore = board.calculateTotalScore(Team.WHITE);
+        final double blackScore = board.calculateTotalScore(Team.BLACK);
+        return new ScoreResponse(whiteScore, blackScore);
     }
 }
