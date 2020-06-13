@@ -3,6 +3,7 @@ package chess.controller;
 import chess.service.BoardService;
 import chess.service.board.dto.BoardResponse;
 import chess.service.board.dto.MoveRequest;
+import chess.service.board.dto.StateResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,11 +46,11 @@ public class BoardController {
     }
 
     @PutMapping("/{id}/move")
-    public ResponseEntity<Void> move(
+    public ResponseEntity<StateResponse> move(
             @PathVariable("id") Long id,
             @Valid MoveRequest request) {
-        boardService.movePiece(id, request.getFrom(), request.getTo());
-        return ResponseEntity.ok().build();
+        StateResponse stateResponse =
+                boardService.movePiece(id, request.getFrom(), request.getTo());
+        return ResponseEntity.ok().body(stateResponse);
     }
-
 }

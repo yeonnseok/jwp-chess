@@ -3,7 +3,9 @@ package chess.service;
 import chess.domain.Board;
 import chess.domain.BoardFactory;
 import chess.domain.BoardRepository;
+import chess.domain.State;
 import chess.service.board.dto.BoardResponse;
+import chess.service.board.dto.StateResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,9 +42,11 @@ public class BoardService {
     }
 
     @Transactional
-    public void movePiece(final Long id, final String from, final String to) {
+    public StateResponse movePiece(final Long id, final String from, final String to) {
         final Board board = boardRepository.findById(id)
                 .orElseThrow(NotExistedBoardException::new);
-        board.move(from, to);
+        State state = board.move(from, to);
+        board.updateTurn(state.getNextTurn());
+        return StateResponse.from(state);
     }
 }

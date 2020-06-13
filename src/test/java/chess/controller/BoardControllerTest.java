@@ -1,9 +1,9 @@
 package chess.controller;
 
-import chess.domain.Board;
-import chess.domain.BoardFactory;
+import chess.domain.*;
 import chess.service.BoardService;
 import chess.service.board.dto.BoardResponse;
+import chess.service.board.dto.StateResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,9 +97,12 @@ class BoardControllerTest {
         final Long boardId = 1L;
         final String from = "b2";
         final String to = "b3";
+        final StateResponse state = StateResponse.from(new Playing(Team.WHITE));
+        given(boardService.movePiece(any(), any(), any())).willReturn(state);
         // when
         mvc.perform(put("/boards/" + boardId + "/move?" + "from=" + from + "&to=" + to))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("\"finished\":false,\"turn\":\"BLACK\"")));
         // then
         verify(boardService).movePiece(eq(1L), eq("b2"), eq("b3"));
     }

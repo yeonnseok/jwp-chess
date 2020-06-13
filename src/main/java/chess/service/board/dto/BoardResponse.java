@@ -10,10 +10,12 @@ import java.util.stream.Collectors;
 public class BoardResponse {
     private Long id;
     private Map<String, String> squares;
+    private String turn;
 
-    public BoardResponse(final Long id, final Map<String, String> squares) {
+    public BoardResponse(final Long id, final Map<String, String> squares, final String turn) {
         this.id = id;
         this.squares = squares;
+        this.turn = turn;
     }
 
     public static BoardResponse from(final Board board) {
@@ -21,7 +23,7 @@ public class BoardResponse {
         board.getSquares().forEach(square -> {
             squares.put(square.getPositionValue(), square.getPieceTeam());
         });
-        return new BoardResponse(board.getId(), squares);
+        return new BoardResponse(board.getId(), squares, board.getTurn());
     }
 
     public static List<BoardResponse> fromList(final List<Board> boards) {
@@ -36,5 +38,9 @@ public class BoardResponse {
 
     public Map<String, String> getSquares() {
         return squares;
+    }
+
+    public String getTurn() {
+        return turn;
     }
 }

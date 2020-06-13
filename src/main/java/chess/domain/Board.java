@@ -21,6 +21,8 @@ public class Board {
     @JoinColumn(name = "BOARD_ID")
     private List<Square> squares;
 
+    private Team turn;
+
     protected Board() {
     }
 
@@ -29,6 +31,7 @@ public class Board {
             throw new InvalidBoardSizeException();
         }
         this.squares = squares;
+        this.turn = Team.WHITE;
     }
 
     public Square findSquareBy(final Position position) {
@@ -42,6 +45,15 @@ public class Board {
         Position from = Position.from(fromValue);
         Position to = Position.from(toValue);
         Square fromSquare = findSquareBy(from);
+
+        if (fromSquare.isBlank()) {
+            throw new StartFromBlankException();
+        }
+
+        if (fromSquare.getTeam() != turn) {
+            throw new NotProperTurnException();
+        }
+
         if (fromSquare.movable(this, to)) {
             Piece toPiece = findSquareBy(to).getPiece();
             Team movedTurn = fromSquare.getTeam();
@@ -67,6 +79,10 @@ public class Board {
                 square.update(piece, team);
             }
         });
+    }
+
+    public void updateTurn(final Team nextTurn) {
+        this.turn = nextTurn;
     }
 
     public double calculateTotalScore(final Team team) {
@@ -95,5 +111,9 @@ public class Board {
 
     public List<Square> getSquares() {
         return squares;
+    }
+
+    public String getTurn() {
+        return turn.name();
     }
 }

@@ -30,6 +30,16 @@ ul {
     border-radius: 5px;
 }
 
+.mini-control-btn:hover{
+    width: 100px;
+    height: 40px;
+    margin: 6px;
+    border: solid violet 2px;
+    background-color: greenyellow;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
 .board-list-section #board-list {
     width: 70%;
     display: flex;

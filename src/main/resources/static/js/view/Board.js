@@ -4,8 +4,10 @@ import { EVENT_TYPE } from "/js/utils/constants.js";
 function Board() {
     const boardId = window.location.hash.substring(1)
     const $boardInner = document.querySelector('#board-inner')
+    const $turn = document.querySelector('#turn-presenter')
     let $squares
     let moveInfo = []
+
 
     const onMovePiece = async event => {
         const $target = event.target
@@ -37,9 +39,11 @@ function Board() {
                 'ContentType' : 'application/json'
             }
         }).then(data => data.json())
-            .then(board => boardSquaresTemplate(board.squares));
+            .then(board => {
+                $turn.innerText = board.turn + "차례 입니다."
+                return boardSquaresTemplate(board.squares)
+            });
         $boardInner.innerHTML = template
-
         initEventListener()
     }
 

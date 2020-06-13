@@ -310,4 +310,22 @@ class BoardTest {
         assertThat(state.getClass()).isEqualTo(Finished.class);
         assertThat(state.getMovedTurn()).isEqualTo(Team.WHITE);
     }
+
+    @DisplayName("from이 빈칸일 경우 예외 발생")
+    @Test
+    void invalidFromPosition() {
+       assertThatThrownBy(() -> {
+            Board board = BoardFactory.create();
+            board.move("a6", "a7");
+       }).isInstanceOf(StartFromBlankException.class);
+    }
+
+    @DisplayName("게임 순서 틀렸을 경우 예외 발생")
+    @Test
+    void invalidTurn() {
+        assertThatThrownBy(() -> {
+            Board board = BoardFactory.create();
+            board.move("a7", "a5");
+        }).isInstanceOf(NotProperTurnException.class);
+    }
 }

@@ -1,6 +1,7 @@
 body {
     font-family: 'Do Hyeon', sans-serif;
     background-image: url("/images/bg.png");
+    position: relative;
 }
 
 img {
@@ -10,6 +11,25 @@ img {
 
 .m-center {
     margin: 0 auto;
+}
+
+.mini-control-btn {
+    width: 100px;
+    height: 40px;
+    margin: 6px;
+    border: solid violet 2px;
+    background-color: darkorange;
+    border-radius: 5px;
+}
+
+.mini-control-btn:hover{
+    width: 100px;
+    height: 40px;
+    margin: 6px;
+    border: solid violet 2px;
+    background-color: greenyellow;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 /* HEADER */
@@ -26,6 +46,33 @@ header .inner {
 header .inner .title {
     color: violet;
     font-size: 48px;
+}
+
+/* INFORMATION */
+.information {
+    position: absolute;
+    top: 100px;
+    left: 10px;
+    width: 180px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.information .presenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: blueviolet;
+    padding: 9px;
+    color: whitesmoke;
+    font-size: 18px;
+}
+
+.information .score {
+    visibility: hidden;
 }
 
 /* BOARD */

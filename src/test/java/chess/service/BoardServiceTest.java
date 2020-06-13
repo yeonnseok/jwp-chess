@@ -3,7 +3,9 @@ package chess.service;
 import chess.domain.Board;
 import chess.domain.BoardFactory;
 import chess.domain.BoardRepository;
+import chess.domain.Team;
 import chess.service.board.dto.BoardResponse;
+import chess.service.board.dto.StateResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -99,13 +101,40 @@ class BoardServiceTest {
         board.setId(63L);
         given(boardRepository.findById(any())).willReturn(Optional.of(board));
         // when
-        final String from = "b2";
-        final String to = "b3";
-        boardService.movePiece(63L, from, to);
+        boardService.movePiece(63L, "b2", "b3");
         // then
         final BoardResponse boardResponse = boardService.findBoard(63L);
-        assertThat(boardResponse.getSquares().get(from)).isEqualTo("BLANK");
-        assertThat(boardResponse.getSquares().get(to)).isEqualTo("WHITE_PAWN");
+        assertThat(boardResponse.getSquares().get("b2")).isEqualTo("BLANK");
+        assertThat(boardResponse.getSquares().get("b3")).isEqualTo("WHITE_PAWN");
     }
 
+    @DisplayName("처음 시작 순서 확인")
+    @Test
+    void startTurn() {
+        // given
+        final Board board = BoardFactory.create();
+        board.setId(63L);
+        given(boardRepository.findById(any())).willReturn(Optional.of(board));
+        // when
+        final StateResponse stateResponse = boardService.movePiece(63L, "b2", "b3");
+        // then
+        assertThat(stateResponse.getTurn()).isEqualTo("BLACK");
+        assertThat(stateResponse.isFinished()).isFalse();
+    }
+
+    @DisplayName("게임 진행 순서 확인")
+    @Test
+    void playingTurn() {
+        // given
+        final Board board = BoardFactory.create();
+        board.setId(63L);
+        board.updateTurn(Team.BLACK);
+        given(boardRepository.findById(any())).willReturn(Optional.of(board));
+        // when
+        final StateResponse stateResponse = boardService.movePiece(63L, "b7", "b5");
+        // then
+        assertThat(stateResponse.getTurn()).isEqualTo("WHITE");
+        assertThat(stateResponse.isFinished()).isFalse();
+        // when
+    }
 }
