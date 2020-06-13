@@ -26,10 +26,7 @@ class PawnMoveStrategyTest {
     @ValueSource(strings = {"c1", "a3", "h7"})
     void invalidMovePawn(String toValue) {
         assertThatThrownBy(() -> {
-            Position from = Position.from("e2");
-            Position to = Position.from(toValue);
-
-            board.move(from, to);
+            board.move("e2", toValue);
         }).isInstanceOf(InvalidMoveException.class);
     }
 
@@ -40,7 +37,7 @@ class PawnMoveStrategyTest {
         Position from = Position.from("e2");
         Position to = Position.from(toValue);
 
-        board.move(from, to);
+        board.move("e2", toValue);
 
         assertThat(board.findSquareBy(from).getPiece()).isEqualTo(Piece.NONE);
         assertThat(board.findSquareBy(from).getTeam()).isEqualTo(Team.NONE);
@@ -55,7 +52,7 @@ class PawnMoveStrategyTest {
         Position from = Position.from("g4");
         Position to = Position.from(toValue);
 
-        board.move(from, to);
+        board.move("g4", toValue);
 
         assertThat(board.findSquareBy(from).getPiece()).isEqualTo(Piece.NONE);
         assertThat(board.findSquareBy(from).getTeam()).isEqualTo(Team.NONE);

@@ -19,9 +19,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -92,5 +90,16 @@ class BoardControllerTest {
         verify(boardService).deleteBoard(eq(5L));
     }
 
-
+    @DisplayName("체스 말 이동")
+    @Test
+    void move() throws Exception {
+        // given
+        final Long boardId = 1L;
+        final String from = "b2";
+        final String to = "b3";
+        // when
+        mvc.perform(put("/boards/" + boardId + "/move?" + from + "/" + to))
+                .andExpect(status().isOk());
+        // then
+    }
 }

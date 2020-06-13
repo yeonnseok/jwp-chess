@@ -28,10 +28,7 @@ class SingleMoveStrategyTest {
     @ValueSource(strings = {"a1", "f5", "h8"})
     void invalidMoveKnight(String toValue) {
         assertThatThrownBy(() -> {
-            Position from = Position.from("f5");
-            Position to = Position.from(toValue);
-
-            board.move(from, to);
+            board.move("f5", toValue);
         }).isInstanceOf(InvalidMoveException.class);
     }
 
@@ -42,7 +39,7 @@ class SingleMoveStrategyTest {
         Position from = Position.from("f5");
         Position to = Position.from(toValue);
 
-        board.move(from, to);
+        board.move("f5", toValue);
 
         assertThat(board.findSquareBy(from).getPiece()).isEqualTo(Piece.NONE);
         assertThat(board.findSquareBy(from).getTeam()).isEqualTo(Team.NONE);
@@ -55,10 +52,7 @@ class SingleMoveStrategyTest {
     @ValueSource(strings = {"h8", "d7", "a6", "d4"})
     void invalidMoveKing(String toValue) {
         assertThatThrownBy(() -> {
-            Position from = Position.from("c3");
-            Position to = Position.from(toValue);
-
-            board.move(from, to);
+            board.move("c3", toValue);
         }).isInstanceOf(InvalidMoveException.class);
     }
 
@@ -69,7 +63,7 @@ class SingleMoveStrategyTest {
         Position from = Position.from("c3");
         Position to = Position.from(toValue);
 
-        board.move(from, to);
+        board.move("c3", toValue);
 
         assertThat(board.findSquareBy(from).getPiece()).isEqualTo(Piece.NONE);
         assertThat(board.findSquareBy(from).getTeam()).isEqualTo(Team.NONE);

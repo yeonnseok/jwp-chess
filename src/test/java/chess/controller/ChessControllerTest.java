@@ -37,5 +37,4 @@ class ChessControllerTest {
                 .andExpect(view().name("board"))
                 .andExpect(content().string(containsString("보스독의 체스 게임")));
     }
-
 }

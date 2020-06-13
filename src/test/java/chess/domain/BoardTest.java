@@ -141,10 +141,8 @@ class BoardTest {
     void moveError() {
         assertThatThrownBy(() -> {
             final Board board = BoardFactory.create();
-            final Position from = Position.from("a1");
-            final Position to = Position.from("a2");
 
-            board.move(from, to);
+            board.move("a1", "a2");
         }).isInstanceOf(InvalidMoveException.class);
     }
 
@@ -156,7 +154,7 @@ class BoardTest {
         final Position from = Position.from(fromValue);
         final Position to = Position.from(toValue);
 
-        State state = board.move(from, to);
+        State state = board.move(fromValue, toValue);
 
         assertThat(state.getClass()).isEqualTo(Playing.class);
         assertThat(state.getMovedTurn()).isEqualTo(expectedToTeam);
@@ -308,7 +306,7 @@ class BoardTest {
         board.updateSquareBy(Position.from("a4"), Piece.KING, Team.BLACK);
         board.updateSquareBy(Position.from("b3"), Piece.PAWN, Team.WHITE);
 
-        State state = board.move(Position.from("b3"), Position.from("a4"));
+        State state = board.move("b3", "a4");
         assertThat(state.getClass()).isEqualTo(Finished.class);
         assertThat(state.getMovedTurn()).isEqualTo(Team.WHITE);
     }

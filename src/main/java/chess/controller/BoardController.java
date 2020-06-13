@@ -2,9 +2,11 @@ package chess.controller;
 
 import chess.service.BoardService;
 import chess.service.board.dto.BoardResponse;
+import chess.service.board.dto.MoveRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -40,6 +42,14 @@ public class BoardController {
     public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
         boardService.deleteBoard(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}/move")
+    public ResponseEntity<Void> move(
+            @PathVariable("id") Long id,
+            @Valid MoveRequest request) {
+        boardService.movePiece(id, request.getFrom(), request.getTo());
+        return ResponseEntity.ok().build();
     }
 
 }

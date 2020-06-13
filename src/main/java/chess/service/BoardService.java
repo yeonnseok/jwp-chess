@@ -5,6 +5,7 @@ import chess.domain.BoardFactory;
 import chess.domain.BoardRepository;
 import chess.service.board.dto.BoardResponse;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -36,5 +37,12 @@ public class BoardService {
 
     public void deleteBoard(final Long id) {
         boardRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void movePiece(final Long id, final String from, final String to) {
+        final Board board = boardRepository.findById(id)
+                .orElseThrow(NotExistedBoardException::new);
+        board.move(from, to);
     }
 }

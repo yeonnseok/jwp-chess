@@ -38,7 +38,9 @@ public class Board {
                 .orElseThrow(NoSuchSquareException::new);
     }
 
-    public State move(final Position from, final Position to) {
+    public State move(final String fromValue, final String toValue) {
+        Position from = Position.from(fromValue);
+        Position to = Position.from(toValue);
         Square fromSquare = findSquareBy(from);
         if (fromSquare.movable(this, to)) {
             Piece toPiece = findSquareBy(to).getPiece();
@@ -85,6 +87,10 @@ public class Board {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(final Long id) {
+        this.id = id;
     }
 
     public List<Square> getSquares() {

@@ -30,10 +30,7 @@ class MultiMoveStrategyTest {
     @ValueSource(strings = {"f6", "e4", "a1", "b2"})
     void invalidMoveQueen(String toValue) {
         assertThatThrownBy(() -> {
-            Position from = Position.from("f4");
-            Position to = Position.from(toValue);
-
-            board.move(from, to);
+            board.move("f4", toValue);
         }).isInstanceOf(InvalidMoveException.class);
     }
 
@@ -44,7 +41,7 @@ class MultiMoveStrategyTest {
         Position from = Position.from("f4");
         Position to = Position.from(toValue);
 
-        board.move(from, to);
+        board.move("f4", toValue);
 
         assertThat(board.findSquareBy(from).getPiece()).isEqualTo(Piece.NONE);
         assertThat(board.findSquareBy(from).getTeam()).isEqualTo(Team.NONE);
@@ -60,7 +57,7 @@ class MultiMoveStrategyTest {
             Position from = Position.from("c2");
             Position to = Position.from(toValue);
 
-            board.move(from, to);
+            board.move("c2", toValue);
         }).isInstanceOf(InvalidMoveException.class);
     }
 
@@ -71,7 +68,7 @@ class MultiMoveStrategyTest {
         Position from = Position.from("c2");
         Position to = Position.from(toValue);
 
-        board.move(from, to);
+        board.move("c2", toValue);
 
         assertThat(board.findSquareBy(from).getPiece()).isEqualTo(Piece.NONE);
         assertThat(board.findSquareBy(from).getTeam()).isEqualTo(Team.NONE);
@@ -84,10 +81,7 @@ class MultiMoveStrategyTest {
     @ValueSource(strings = {"d3", "g8", "f4", "a1"})
     void invalidMoveBishop(String toValue) {
         assertThatThrownBy(() -> {
-            Position from = Position.from("d2");
-            Position to = Position.from(toValue);
-
-            board.move(from, to);
+            board.move("d2", toValue);
         }).isInstanceOf(InvalidMoveException.class);
     }
 
@@ -98,7 +92,7 @@ class MultiMoveStrategyTest {
         Position from = Position.from("d2");
         Position to = Position.from(toValue);
 
-        board.move(from, to);
+        board.move("d2", toValue);
 
         assertThat(board.findSquareBy(from).getPiece()).isEqualTo(Piece.NONE);
         assertThat(board.findSquareBy(from).getTeam()).isEqualTo(Team.NONE);
