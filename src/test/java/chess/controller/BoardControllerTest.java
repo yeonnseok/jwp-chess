@@ -98,8 +98,9 @@ class BoardControllerTest {
         final String from = "b2";
         final String to = "b3";
         // when
-        mvc.perform(put("/boards/" + boardId + "/move?" + from + "/" + to))
+        mvc.perform(put("/boards/" + boardId + "/move?" + "from=" + from + "&to=" + to))
                 .andExpect(status().isOk());
         // then
+        verify(boardService).movePiece(eq(1L), eq("b2"), eq("b3"));
     }
 }

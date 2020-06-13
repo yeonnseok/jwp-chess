@@ -91,4 +91,21 @@ class BoardServiceTest {
         verify(boardRepository).deleteById(eq(63L));
     }
 
+    @DisplayName("체스 말 움직이기")
+    @Test
+    void movePiece() {
+        // given
+        final Board board = BoardFactory.create();
+        board.setId(63L);
+        given(boardRepository.findById(any())).willReturn(Optional.of(board));
+        // when
+        final String from = "b2";
+        final String to = "b3";
+        boardService.movePiece(63L, from, to);
+        // then
+        final BoardResponse boardResponse = boardService.findBoard(63L);
+        assertThat(boardResponse.getSquares().get(from)).isEqualTo("BLANK");
+        assertThat(boardResponse.getSquares().get(to)).isEqualTo("WHITE_PAWN");
+    }
+
 }
