@@ -5,7 +5,7 @@
 - [ ] 체스 보드판을 초기화 한다.
 
   - [ ] `Board`, `BoardFactory`, `Square`, `Position`, `Piece`, `Team`
-  - [ ] {file : a~h, rank : 1~8}
+  - [ ] {file : a ~ h, rank : 1 ~ 8}
 
 ![](https://images.velog.io/images/ljinsk3/post/2b927313-79bd-44d6-b102-0a91599eef0f/image.png)
 
