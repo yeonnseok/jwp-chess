@@ -1,4 +1,4 @@
-# jwp-chess 
+# jwp-chess  [![Build Status](https://travis-ci.com/yeonnseok/jwp-chess.svg?branch=tester)](https://travis-ci.com/yeonnseok/jwp-chess)
 
 ### 기능 구현 목록
 
